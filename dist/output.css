@@ -1087,6 +1087,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   }
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
 body{
   font-family: 'Poppins', sans-serif;
 }
