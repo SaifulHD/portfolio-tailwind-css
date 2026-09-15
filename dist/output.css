@@ -472,6 +472,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 100%;
   margin-right: auto;
   margin-left: auto;
+  padding-right: 16px;
+  padding-left: 16px;
 }
 
 @media (min-width: 640px) {
@@ -1129,6 +1131,14 @@ body{
   --tw-scale-x: 0;
   --tw-scale-y: 0;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+/* The decorative hero blob is intentionally wider than the photo, which pushed
+   the page ~5px past the viewport on phones. Clip it horizontally; `clip` is
+   used over `hidden` so the section does not become a scroll container. */
+
+#home {
+  overflow-x: clip;
 }
 
 .hover\:border-primary:hover {
