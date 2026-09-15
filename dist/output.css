@@ -571,7 +571,7 @@ body {
        rather than freshly exported, not enough to look like a filter app. */
 
 .portrait {
-  filter: sepia(0.26) saturate(1.06) contrast(0.96) brightness(1.03);
+  filter: sepia(0.62) saturate(0.72) contrast(0.88) brightness(1.08) hue-rotate(-8deg);
 }
 
 .field {
