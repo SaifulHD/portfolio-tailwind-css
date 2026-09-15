@@ -46,3 +46,9 @@ body{
 .hamburger-active > span:nth-child(2){
     @apply scale-0;
 }
+/* The decorative hero blob is intentionally wider than the photo, which pushed
+   the page ~5px past the viewport on phones. Clip it horizontally; `clip` is
+   used over `hidden` so the section does not become a scroll container. */
+#home {
+    overflow-x: clip;
+}
