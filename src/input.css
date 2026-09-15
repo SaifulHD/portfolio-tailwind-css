@@ -1,54 +1,120 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-.wave {
-    animation-name: wave-animation;  /* Refers to the name of your @keyframes element below */
-    animation-duration: 2.5s;        /* Change to speed up or slow down */
-    animation-iteration-count: infinite;  /* Never stop waving :) */
-    transform-origin: 70% 70%;       /* Pivot around the bottom-left palm */
-    display: inline-block;
-  }
-  
-  @keyframes wave-animation {
-      0% { transform: rotate( 0.0deg) }
-     10% { transform: rotate(14.0deg) }  /* The following five values can be played with to make the waving more or less extreme */
-     20% { transform: rotate(-8.0deg) }
-     30% { transform: rotate(14.0deg) }
-     40% { transform: rotate(-4.0deg) }
-     50% { transform: rotate(10.0deg) }
-     60% { transform: rotate( 0.0deg) }  /* Reset for the last half to pause */
-    100% { transform: rotate( 0.0deg) }
-  }
-html{
-    scroll-behavior: smooth;
-}
-body{
-    
-    font-family: 'Poppins', sans-serif;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-ground text-ink font-sans antialiased;
+    }
+
+    /* Keyboard users need to see where they are. */
+    :focus-visible {
+        outline: 2px solid theme('colors.accent');
+        outline-offset: 3px;
+        border-radius: 2px;
+    }
 }
 
-.navbar-fixed {
-    @apply fixed z-[9999] bg-white bg-opacity-80;
-    backdrop-filter: blur(5px);
-    box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.1);
+@layer components {
+    /* Archivo carries a width axis. Widening the display sizes gives the
+       headings a signage-like presence without bringing in a second family. */
+    .display {
+        font-stretch: 115%;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+    }
+
+    /* Each project is shown as a plate: the screenshot sits on true white,
+       the way the interface actually looks, with a hairline instead of the
+       soft grey card shadow every template reaches for. */
+    .plate {
+        @apply bg-surface border border-rule overflow-hidden;
+        border-radius: 3px;
+    }
+
+    /* Client / year / stack. Tabular figures keep the numbers aligned. */
+    .spec dt {
+        @apply text-xs text-muted;
+        letter-spacing: 0.01em;
+    }
+
+    .spec dd {
+        @apply text-sm text-ink mb-4;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .field {
+        @apply w-full bg-surface border border-rule px-4 py-3 text-ink;
+        border-radius: 3px;
+    }
+
+    .field:focus {
+        border-color: theme('colors.accent');
+        outline: none;
+        box-shadow: 0 0 0 1px theme('colors.accent');
+    }
+
+    .hamburger-line {
+        @apply block w-6 h-px bg-ink my-1.5;
+        transition: transform 200ms ease, opacity 200ms ease;
+    }
+
+    .hamburger-active > span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger-active > span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger-active > span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
 }
 
-.hamburger-line{
-    @apply w-[30px] h-[2px] my-2 block bg-dark;
+/* One orchestrated moment on load — the opening statement settles and the
+   first piece of work rises once. Nothing else on the page animates itself. */
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
-.hamburger-active > span:nth-child(1){
-    @apply rotate-45;
+.rise {
+    animation: rise 620ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
-.hamburger-active > span:nth-child(3){
-    @apply -rotate-45;
+
+.rise-2 {
+    animation-delay: 110ms;
 }
-.hamburger-active > span:nth-child(2){
-    @apply scale-0;
+
+.rise-3 {
+    animation-delay: 220ms;
 }
-/* The decorative hero blob is intentionally wider than the photo, which pushed
-   the page ~5px past the viewport on phones. Clip it horizontally; `clip` is
-   used over `hidden` so the section does not become a scroll container. */
-#home {
-    overflow-x: clip;
+
+.rise-4 {
+    animation-delay: 360ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .rise {
+        animation: none;
+    }
+
+    .hamburger-line {
+        transition: none;
+    }
 }
