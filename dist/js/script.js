@@ -1,34 +1,29 @@
-//navbar fixed
-window.onscroll = function() {
-    const header = document.querySelector('header');
-    const fixedNav = header.offsetTop;
-
-    if (window.pageYOffset > fixedNav) {
-        header.classList.add('navbar-fixed');
-    } else {
-        header.classList.remove('navbar-fixed');
-    }
-};
-
-
-//hamburger
+// Mobile menu. The header is sticky in CSS, so there is no scroll handler
+// here — nothing on this page needs to animate itself as you scroll.
 const hamburger = document.querySelector('#hamburger');
 const navMenu = document.querySelector('#nav-menu');
 
-hamburger.addEventListener('click', function() {
-    hamburger.classList.toggle('hamburger-active');
-    navMenu.classList.toggle('hidden');
-    // keep the button's accessible state in sync with what is on screen
-    hamburger.setAttribute('aria-expanded', String(!navMenu.classList.contains('hidden')));
+function setMenu(open) {
+    navMenu.classList.toggle('hidden', !open);
+    hamburger.classList.toggle('hamburger-active', open);
+    hamburger.setAttribute('aria-expanded', String(open));
+    hamburger.setAttribute('aria-label', open ? 'Tutup menu' : 'Buka menu');
+}
+
+hamburger.addEventListener('click', function () {
+    setMenu(navMenu.classList.contains('hidden'));
 });
 
-// on mobile the menu stayed open after picking a destination, covering the
-// section it had just scrolled to
-navMenu.querySelectorAll('a').forEach(function(link) {
-    link.addEventListener('click', function() {
-        if (navMenu.classList.contains('hidden')) return;
-        hamburger.classList.remove('hamburger-active');
-        navMenu.classList.add('hidden');
-        hamburger.setAttribute('aria-expanded', 'false');
+// Picking a destination should close the menu covering it.
+navMenu.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
+        if (!navMenu.classList.contains('hidden')) setMenu(false);
     });
+});
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && !navMenu.classList.contains('hidden')) {
+        setMenu(false);
+        hamburger.focus();
+    }
 });
