@@ -47,6 +47,15 @@
         font-variant-numeric: tabular-nums;
     }
 
+    /* The portrait is a cut-out PNG with a real alpha channel, so it sits
+       straight on the page instead of inside a white plate — a box behind it
+       would read as a background the photo does not actually have.
+       The grade is a warm, slightly faded film look: enough to feel printed
+       rather than freshly exported, not enough to look like a filter app. */
+    .portrait {
+        filter: sepia(0.26) saturate(1.06) contrast(0.96) brightness(1.03);
+    }
+
     .field {
         @apply w-full bg-surface border border-rule px-4 py-3 text-ink;
         border-radius: 3px;
